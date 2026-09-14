@@ -1,0 +1,8 @@
+curl -X GET http://localhost:5000/author/unknownAuthor
+{"message":"No books found for author [ unknownAuthor ]"}
+
+curl -X GET http://localhost:5000/author/Honoré%20de%20Balzac
+[{"author":"Honoré de Balzac","title":"Le Père Goriot","reviews":{}}]
+
+curl -X GET http://localhost:5000/author/Unknown
+[{"author":"Unknown","title":"The Epic Of Gilgamesh","reviews":{}},{"author":"Unknown","title":"The Book Of Job","reviews":{}},{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}},{"author":"Unknown","title":"Njáls Saga","reviews":{}}]
