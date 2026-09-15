@@ -1,0 +1,5 @@
+curl -X GET http://localhost:5000/review/12345                
+{"message":"No book found for ISBN [ 12345 ]"}
+
+curl -X GET http://localhost:5000/review/1   
+{}
