@@ -1,0 +1,5 @@
+curl -X GET http://localhost:5000/title/incorrectTitle
+{"message":"No books found for title [ incorrectTitle ]"}
+
+curl -X GET http://localhost:5000/title/Pride%20and%20Prejudice
+[{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}]
