@@ -1,8 +1,13 @@
-curl -X POST http://localhost:5000/register
-{"message":"Username and password are required"}
+ERROR CASES:
 
-curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}'
-{"message":"User [ John Doe ] registered successfully"}
+curl -X POST http://localhost:5000/register
+{"error":"Username and password are required"}
 
 curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "12345678"}'
-{"message":"User [ John Doe ] already exists"}
+{"error":"User [ John Doe ] already exists"}
+
+
+SUCCESS CASES:
+
+curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}'
+{"success":"User [ John Doe ] registered successfully. Now you can login."}

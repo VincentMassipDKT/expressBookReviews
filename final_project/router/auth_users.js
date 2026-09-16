@@ -26,7 +26,7 @@ regd_users.post("/login", (req, res) => {
 
   // Check if username or password is missing
   if (!username || !password) {
-    return res.status(404).json({ message: "Error logging in" });
+    return res.status(404).json({ error: "Error logging in" });
   };
   
   if (authenticatedUser(username, password)) {
@@ -35,9 +35,9 @@ regd_users.post("/login", (req, res) => {
     // Store access token and username in the session
     req.session.authorization = { accessToken, username };
 
-    return res.status(200).json({ message: `User [ ${username} ] logged in successfully` });
+    return res.status(200).json({ success: `User [ ${username} ] logged in successfully` });
   } else {
-    return res.status(401).json({ message: "Invalid username or password" });
+    return res.status(401).json({ error: "Invalid username or password" });
   };
 });
 
@@ -47,9 +47,9 @@ regd_users.get("/auth", (req, res) => {
   const accessToken = req.session?.authorization?.accessToken;
   
   if (!username || !accessToken) {
-    return res.status(401).json({ message: "User isn't logged in" });
+    return res.status(401).json({ error: "User isn't logged in" });
   }
-  return res.status(200).json({ message: `User [ ${username} ] is authenticated with token [ ${accessToken} ]` });
+  return res.status(200).json({ success: `User [ ${username} ] is authenticated with token [ ${accessToken} ]` });
 });
 
 // Add a book review
@@ -59,19 +59,19 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   const username = req.session?.authorization?.username;
 
   if (!username) {
-    return res.status(401).json({ message: "User isn't logged in" });
+    return res.status(401).json({ error: "User isn't logged in" });
   };
 
   if (!books[isbn]) {
-    return res.status(404).json({ message: `No book found for ISBN [ ${isbn} ]` });
+    return res.status(404).json({ error: `No book found for ISBN [ ${isbn} ]` });
   };
 
   if (!review) {
-    return res.status(400).json({ message: "Review content is missing" });
+    return res.status(400).json({ error: "Review content is missing" });
   }
 
   books[isbn].reviews[username] = review;
-  return res.status(200).json({ message: `Review successfully added/updated by [ ${username} ] for ISBN [ ${isbn} ]` });
+  return res.status(200).json({ success: `Review successfully added/updated by [ ${username} ] for ISBN [ ${isbn} ]` });
 });
 
 // Delete a book review
@@ -80,19 +80,19 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   const username = req.session?.authorization?.username;
 
   if (!username) {
-    return res.status(401).json({ message: "User isn't logged in" });
+    return res.status(401).json({ error: "User isn't logged in" });
   };
 
   if (!books[isbn]) {
-    return res.status(404).json({ message: `No book found for ISBN [ ${isbn} ]` });
+    return res.status(404).json({ error: `No book found for ISBN [ ${isbn} ]` });
   };
 
   if (!books[isbn].reviews[username]) {
-    return res.status(404).json({ message: `No review found for user [ ${username} ] on ISBN [ ${isbn} ]` });
+    return res.status(404).json({ error: `No review found for user [ ${username} ] on ISBN [ ${isbn} ]` });
   };
 
   delete books[isbn].reviews[username];
-  return res.status(200).json({ message: `Review successfully deleted by [ ${username} ] for ISBN [ ${isbn} ]` });
+  return res.status(200).json({ success: `Review successfully deleted by [ ${username} ] for ISBN [ ${isbn} ]` });
 });
 
 module.exports.authenticated = regd_users;
