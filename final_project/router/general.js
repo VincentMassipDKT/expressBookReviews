@@ -4,6 +4,7 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+// Register a new user
 public_users.post("/register", (req, res) => {
   const username = req?.body?.username;
   const password = req?.body?.password;
@@ -28,6 +29,7 @@ public_users.get('/', async function (req, res) {
   return res.status(200).json(bookList);
 });
 
+// Promise to get the book list
 async function fetchBooksPromise() {
   return new Promise((resolve, reject) => {
     const bookList = JSON.stringify(Object.values(books), null, 2);
@@ -50,6 +52,7 @@ public_users.get('/isbn/:isbn', async function (req, res) {
   };
 });
 
+// Promise to get book details based on ISBN
 async function fetchBookByISBNPromise(isbn) {
   return new Promise((resolve, reject) => {
     const book = books[isbn];
@@ -72,6 +75,7 @@ public_users.get('/author/:author', async function (req, res) {
   };
 });
 
+// Promise to get book details based on author
 async function fetchBooksByAuthorPromise(author) {
   return new Promise((resolve, reject) => {
     const booksByAuthor = Object.values(books).filter(book => book.author === author);
@@ -94,6 +98,7 @@ public_users.get('/title/:title', async function (req, res) {
   };
 });
 
+// Promise to get book details based on title
 async function fetchBooksByTitlePromise(title) {
   return new Promise((resolve, reject) => {
     const booksByTitle = Object.values(books).filter(book => book.title === title);
@@ -122,6 +127,7 @@ public_users.get('/review/:isbn', function (req, res) {
 const axios = require('axios');
 const BASE_URL = 'http://localhost:5000';
 
+// Axios implementation for fetching books
 async function fetchBooksWithAxios() {
   try {
     const response = await axios.get(`${BASE_URL}/`);
@@ -131,6 +137,7 @@ async function fetchBooksWithAxios() {
   };
 };
 
+// Axios implementation for fetching book by ISBN
 async function fetchBookByISBNWithAxios(isbn) {
   try {
     const response = await axios.get(`${BASE_URL}/isbn/${isbn}`);
@@ -140,6 +147,7 @@ async function fetchBookByISBNWithAxios(isbn) {
   };
 };
 
+// Axios implementation for fetching books by author
 async function fetchBooksByAuthorWithAxios(author) {
   try {
     const response = await axios.get(`${BASE_URL}/author/${author}`);
@@ -149,6 +157,7 @@ async function fetchBooksByAuthorWithAxios(author) {
   };
 };
 
+// Axios implementation for fetching books by title
 async function fetchBooksByTitleWithAxios(title) {
   try {
     const response = await axios.get(`${BASE_URL}/title/${title}`);
