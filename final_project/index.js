@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ message: `Internal Server Error \n ${err.name} \n ${err.message}` });
+    res.status(500).json({ error: `Internal Server Error \n ${err.name} \n ${err.message}` });
 });
 
 app.use("/customer", session({secret: "fingerprint_customer", resave: true, saveUninitialized: true}))
@@ -24,11 +24,11 @@ app.use("/customer/auth/*", function auth(req, res, next){
                 req.user = user;
                 next(); // Proceed to the next middleware
             } else {
-                return res.status(403).json({ message: "Forbidden" });
+                return res.status(403).json({ error: "Forbidden" });
             }
         });
     } else {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ error: "Unauthorized" });
     }
 });
 

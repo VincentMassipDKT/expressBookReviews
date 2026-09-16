@@ -1,8 +1,13 @@
+ERROR CASES:
+
 curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json"                                                   
-{"message":"Error logging in"}
+{"error":"Error logging in"}
 
 curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "12345678"}' 
-{"message":"Invalid username or password"}
+{"error":"Invalid username or password"}
+
+
+SUCCESS CASES:
 
 curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}'
-{"message":"User [ John Doe ] logged in successfully"}
+{"success":"User [ John Doe ] logged in successfully"}

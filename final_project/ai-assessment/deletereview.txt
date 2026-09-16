@@ -1,11 +1,13 @@
-curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}'
-curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}' -c cookies.txt
+ERROR CASES:
 
 curl -X DELETE http://localhost:5000/customer/auth/review/12345 -b cookies.txt
-{"message":"No book found for ISBN [ 12345 ]"}
+{"error":"No book found for ISBN [ 12345 ]"}
 
 curl -X DELETE http://localhost:5000/customer/auth/review/2 -b cookies.txt
-{"message":"No review found for user [ John Doe ] on ISBN [ 2 ]"}
+{"error":"No review found for user [ John Doe ] on ISBN [ 2 ]"}
+
+
+SUCCESS CASEs:
 
 curl -X DELETE http://localhost:5000/customer/auth/review/1 -b cookies.txt
-{"message":"Review successfully deleted by [ John Doe ] for ISBN [ 1 ]"}
+{"success":"Review successfully deleted by [ John Doe ] for ISBN [ 1 ]"}

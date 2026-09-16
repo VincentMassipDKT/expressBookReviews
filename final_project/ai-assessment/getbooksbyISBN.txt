@@ -1,6 +1,10 @@
-curl -X GET http://localhost:5000/isbn/incorrectCode
-{"message":"No book found for ISBN [ incorrectCode ]"}
+ERROR CASES:
 
+curl -X GET http://localhost:5000/isbn/incorrectCode
+{"error":"No book found for ISBN [ incorrectCode ]"}
+
+
+SUCCESS CASES:
 
 curl -X GET http://localhost:5000/isbn/1
 {"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}
