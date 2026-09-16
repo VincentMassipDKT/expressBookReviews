@@ -41,8 +41,7 @@ regd_users.post("/login", (req, res) => {
   };
 });
 
-
-
+// Route to check if the user is authenticated
 regd_users.get("/auth", (req, res) => {
   const username = req.session?.authorization?.username;
   const accessToken = req.session?.authorization?.accessToken;
@@ -52,9 +51,6 @@ regd_users.get("/auth", (req, res) => {
   }
   return res.status(200).json({ message: `User [ ${username} ] is authenticated with token [ ${accessToken} ]` });
 });
-
-
-
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
@@ -76,6 +72,27 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   books[isbn].reviews[username] = review;
   return res.status(200).json({ message: `Review successfully added/updated by [ ${username} ] for ISBN [ ${isbn} ]` });
+});
+
+// Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const isbn = req.params?.isbn;
+  const username = req.session?.authorization?.username;
+
+  if (!username) {
+    return res.status(401).json({ message: "User isn't logged in" });
+  };
+
+  if (!books[isbn]) {
+    return res.status(404).json({ message: `No book found for ISBN [ ${isbn} ]` });
+  };
+
+  if (!books[isbn].reviews[username]) {
+    return res.status(404).json({ message: `No review found for user [ ${username} ] on ISBN [ ${isbn} ]` });
+  };
+
+  delete books[isbn].reviews[username];
+  return res.status(200).json({ message: `Review successfully deleted by [ ${username} ] for ISBN [ ${isbn} ]` });
 });
 
 module.exports.authenticated = regd_users;
