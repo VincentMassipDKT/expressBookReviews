@@ -1,4 +1,4 @@
-url -X POST http://localhost:5000/customer/login -H "Content-Type: application/json"                                                   
+curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json"                                                   
 {"message":"Error logging in"}
 
 curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "12345678"}' 
