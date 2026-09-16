@@ -10,15 +10,15 @@ public_users.post("/register", (req, res) => {
   const password = req?.body?.password;
 
   if (!username || !password) {
-    return res.status(400).json({ message: "Username and password are required" });
+    return res.status(400).json({ error: "Username and password are required" });
   };
 
   if (users.find(user => user.username === username)) {
-    return res.status(400).json({ message: `User [ ${username} ] already exists` });
+    return res.status(400).json({ error: `User [ ${username} ] already exists` });
   };
   
   users.push({ username, password });
-  return res.status(200).json({ message: `User [ ${username} ] registered successfully. Now you can login.` });
+  return res.status(200).json({ success: `User [ ${username} ] registered successfully. Now you can login.` });
 });
 
 
@@ -48,7 +48,7 @@ public_users.get('/isbn/:isbn', async function (req, res) {
   if (book) {
     return res.status(200).json(book);
   } else {
-    return res.status(404).json({ message: `No book found for ISBN [ ${isbn} ]` });
+    return res.status(404).json({ error: `No book found for ISBN [ ${isbn} ]` });
   };
 });
 
@@ -71,7 +71,7 @@ public_users.get('/author/:author', async function (req, res) {
   if (booksByAuthor.length > 0) {
     return res.status(200).json(booksByAuthor);
   } else {
-    return res.status(404).json({ message: `No books found for author [ ${author} ]` });
+    return res.status(404).json({ error: `No books found for author [ ${author} ]` });
   };
 });
 
@@ -94,7 +94,7 @@ public_users.get('/title/:title', async function (req, res) {
   if (booksByTitle.length > 0) {
     return res.status(200).json(booksByTitle);
   } else {
-    return res.status(404).json({ message: `No books found for title [ ${title} ]` });
+    return res.status(404).json({ error: `No books found for title [ ${title} ]` });
   };
 });
 
@@ -117,7 +117,7 @@ public_users.get('/review/:isbn', function (req, res) {
   if (book) {
     return res.status(200).json(book.reviews);
   } else {
-    return res.status(404).json({ message: `No book found for ISBN [ ${isbn} ]` });
+    return res.status(404).json({ error: `No book found for ISBN [ ${isbn} ]` });
   };
 });
 
