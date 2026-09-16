@@ -1,11 +1,13 @@
-curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}'
-curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "John Doe", "password": "1234"}' -c cookies.txt
+ERROR CASES:
 
 curl -X PUT http://localhost:5000/customer/auth/review/12345 -b cookies.txt
 {"message":"No book found for ISBN [ 1255 ]"}
 
 curl -X PUT http://localhost:5000/customer/auth/review/1 -b cookies.txt 
 {"message":"Review content is missing"}
+
+
+SUCCESS CASES:
 
 curl -X PUT http://localhost:5000/customer/auth/review/1 -b cookies.txt -H "Content-Type: application/json" -d '{"review": "I loved this book! Added to my favorites!"}'
 {"message":"Review successfully added/updated by [ John Doe ] for ISBN [ 1 ]"}
