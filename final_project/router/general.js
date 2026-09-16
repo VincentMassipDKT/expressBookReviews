@@ -56,7 +56,7 @@ async function fetchBookByISBNPromise(isbn) {
     try {
       resolve(book);
     } catch (e) {
-      reject(new Error(`Failed to find book from ISBN [ ${isbn} ]: ${e.name} - ${e.message}`));
+      reject(new Error(`Failed to find book with ISBN [ ${isbn} ]: ${e.name} - ${e.message}`));
     };
   });
 };
@@ -78,21 +78,40 @@ async function fetchBooksByAuthorPromise(author) {
     try {
       resolve(booksByAuthor);
     } catch (e) {
-      reject(new Error(`Failed to find books for author [ ${author} ]: ${e.name} - ${e.message}`));
+      reject(new Error(`Failed to find books with author [ ${author} ]: ${e.name} - ${e.message}`));
     };
   });
 };
 
 // Get all books based on title
-public_users.get('/title/:title', function (req, res) {
+public_users.get('/title/:title', async function (req, res) {
   const title = req.params.title;
-  const booksByTitle = Object.values(books).filter(book => book.title === title);
+  const booksByTitle = await fetchBooksByTitlePromise(title);
   if (booksByTitle.length > 0) {
     return res.status(200).json(booksByTitle);
   } else {
     return res.status(404).json({ message: `No books found for title [ ${title} ]` });
   };
 });
+
+async function fetchBooksByTitlePromise(title) {
+  return new Promise((resolve, reject) => {
+    const booksByTitle = Object.values(books).filter(book => book.title === title);
+    try {
+      resolve(booksByTitle);
+    } catch (e) {
+      reject(new Error(`Failed to find books with title [ ${title} ]: ${e.name} - ${e.message}`));
+    };
+  });
+};
+
+
+
+
+
+
+
+
 
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
