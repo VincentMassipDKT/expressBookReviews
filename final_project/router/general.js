@@ -105,14 +105,6 @@ async function fetchBooksByTitlePromise(title) {
   });
 };
 
-
-
-
-
-
-
-
-
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
   const isbn = req.params.isbn;
@@ -124,4 +116,51 @@ public_users.get('/review/:isbn', function (req, res) {
   };
 });
 
+// ----- ----- -------------------- ----- -----
+// ----- ----- AXIOS IMPLEMENTATION ----- -----
+
+const axios = require('axios');
+const BASE_URL = 'http://localhost:5000';
+
+async function fetchBooksWithAxios() {
+  try {
+    const response = await axios.get(`${BASE_URL}/`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch books with Axios: ${error.name} - ${error.message}`);
+  };
+};
+
+async function fetchBookByISBNWithAxios(isbn) {
+  try {
+    const response = await axios.get(`${BASE_URL}/isbn/${isbn}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch book with ISBN [ ${isbn} ] with Axios: ${error.name} - ${error.message}`);
+  };
+};
+
+async function fetchBooksByAuthorWithAxios(author) {
+  try {
+    const response = await axios.get(`${BASE_URL}/author/${author}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch books by author [ ${author} ] with Axios: ${error.name} - ${error.message}`);
+  };
+};
+
+async function fetchBooksByTitleWithAxios(title) {
+  try {
+    const response = await axios.get(`${BASE_URL}/title/${title}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch books by title [ ${title} ] with Axios: ${error.name} - ${error.message}`);
+  };
+};
+
+
 module.exports.general = public_users;
+module.exports.fetchBooksWithAxios = fetchBooksWithAxios;
+module.exports.fetchBookByISBNWithAxios = fetchBookByISBNWithAxios;
+module.exports.fetchBooksByAuthorWithAxios = fetchBooksByAuthorWithAxios;
+module.exports.fetchBooksByTitleWithAxios = fetchBooksByTitleWithAxios;
